@@ -33,7 +33,6 @@ export async function Navbar() {
           <Link href="/forum" className="nav-link">论坛</Link>
           <Link href="/blog" className="nav-link">日志</Link>
           <Link href="/members" className="nav-link">成员</Link>
-          <Link href="/draw" className="nav-link">抽签</Link>
           {profile?.is_admin && (
             <Link href="/admin" className="nav-link nav-link-muted">管理</Link>
           )}
