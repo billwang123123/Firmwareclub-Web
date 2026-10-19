@@ -18,6 +18,7 @@ export default async function MembersPage() {
     data: { user },
   } = await supabase.auth.getUser();
   let isAdmin = false;
+  let username: string | null = null;
   if (user) {
     const { data } = await supabase
       .from("profiles")
@@ -31,11 +32,18 @@ export default async function MembersPage() {
     <div className="stack-y-6">
       <div className="flex items-center justify-between">
         <h1 className="h1">{t("members.title")}</h1>
-        {isAdmin && (
-          <LinkButton href="/members/manage">
-            <Pencil size={16} /> {t("members.manage")}
-          </LinkButton>
-        )}
+        <div className="flex items-center gap-2">
+          {user && (
+            <LinkButton href="/members/manage/new" variant="outline">
+              <Pencil size={16} /> {t("members.add")}
+            </LinkButton>
+          )}
+          {isAdmin && (
+            <LinkButton href="/members/manage">
+              <Pencil size={16} /> {t("members.manage")}
+            </LinkButton>
+          )}
+        </div>
       </div>
       {!members?.length ? (
         <div className="empty-state">{t("members.empty")}</div>

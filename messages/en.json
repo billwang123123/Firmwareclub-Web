@@ -74,6 +74,7 @@
   "members": {
     "title": "Club Members",
     "manage": "Manage members",
+    "add": "Add member",
     "empty": "No members yet."
   },
   "auth": {

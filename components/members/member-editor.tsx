@@ -74,7 +74,14 @@ export function MemberEditor({ initial = {}, mode }: Props) {
     };
     let err;
     if (mode === "create") {
-      const { error: e2 } = await supabase.from("members").insert(payload);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push("/login");
+        return;
+      }
+      const { error: e2 } = await supabase
+        .from("members")
+        .insert({ ...payload, created_by: user.id });
       err = e2;
     } else if (initial.id) {
       const { error: e2 } = await supabase

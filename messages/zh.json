@@ -74,6 +74,7 @@
   "members": {
     "title": "社团成员",
     "manage": "管理成员",
+    "add": "添加成员",
     "empty": "还没有成员。"
   },
   "auth": {
