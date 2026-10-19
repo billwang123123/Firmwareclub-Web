@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="zh-CN" className="h-full">
-      <body className="app-shell">
+    <html lang="zh-CN" className="h-full" suppressHydrationWarning>
+      <body className="app-shell" suppressHydrationWarning>
         <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
