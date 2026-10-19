@@ -130,6 +130,13 @@ export function PostDetail({
   const supabase = createClient();
 
   useEffect(() => {
+    // Force-refresh session on mount (handles stale client-side auth state)
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session?.user?.id !== currentUserId) {
+        // Session changed — reload to re-render server-side auth-aware UI
+        router.refresh();
+      }
+    });
     const channel = supabase
       .channel(`post-${post.id}`)
       .on(

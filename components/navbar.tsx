@@ -4,6 +4,9 @@ import { UserMenu } from "@/components/user-menu";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { getT } from "@/lib/i18n-server";
 
+// Force dynamic rendering so navbar always has fresh user data
+export const dynamic = "force-dynamic";
+
 export async function Navbar() {
   const supabase = await createClient();
   const t = await getT();

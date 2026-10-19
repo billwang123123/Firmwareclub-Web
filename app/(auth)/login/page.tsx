@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GithubIcon } from "@/components/icons/github";
 import { useI18n } from "@/lib/i18n";
 
 function LoginForm() {
@@ -20,7 +19,6 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [githubLoading, setGithubLoading] = useState(false);
 
   async function handleEmailLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -37,37 +35,13 @@ function LoginForm() {
     router.refresh();
   }
 
-  async function handleGithub() {
-    setGithubLoading(true);
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "github",
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=${next}` },
-    });
-    if (error) {
-      setError(error.message);
-      setGithubLoading(false);
-    }
-  }
-
   return (
     <Card className="w-full max-w-sm auth-card">
       <CardHeader>
         <CardTitle>{t("auth.login.title")}</CardTitle>
         <CardDescription>{t("auth.login.desc")}</CardDescription>
       </CardHeader>
-      <CardContent className="stack-y-4">
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full"
-          onClick={handleGithub}
-          disabled={githubLoading}
-        >
-          <GithubIcon className="h-4 w-4" />
-          {githubLoading ? t("auth.login.githubLoading") : t("auth.login.github")}
-        </Button>
-        <div className="divider-text"><span>{t("auth.login.or")}</span></div>
+      <CardContent>
         <form onSubmit={handleEmailLogin} className="stack-y-3">
           <div className="field">
             <Label htmlFor="email">{t("auth.login.email")}</Label>
@@ -95,7 +69,7 @@ function LoginForm() {
             {loading ? t("auth.login.submitting") : t("auth.login.submit")}
           </Button>
         </form>
-        <p className="text-sm muted text-center">
+        <p className="text-sm muted text-center" style={{ marginTop: "1rem" }}>
           {t("auth.login.noAccount")}{" "}
           <Link href="/register" style={{ color: "hsl(var(--accent))" }}>
             {t("auth.login.register")}
