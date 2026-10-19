@@ -9,9 +9,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { GithubIcon } from "@/components/icons/github";
+import { useI18n } from "@/lib/i18n";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,8 +60,8 @@ export default function RegisterPage() {
     <div className="auth-wrap">
       <Card className="w-full max-w-sm auth-card">
         <CardHeader>
-          <CardTitle>注册</CardTitle>
-          <CardDescription>创建账号加入社团</CardDescription>
+          <CardTitle>{t("auth.register.title")}</CardTitle>
+          <CardDescription>{t("auth.register.desc")}</CardDescription>
         </CardHeader>
         <CardContent className="stack-y-4">
           <Button
@@ -70,12 +72,12 @@ export default function RegisterPage() {
             disabled={githubLoading}
           >
             <GithubIcon className="h-4 w-4" />
-            {githubLoading ? "跳转中..." : "使用 GitHub 注册"}
+            {githubLoading ? t("auth.register.githubLoading") : t("auth.register.github")}
           </Button>
-          <div className="divider-text"><span>或</span></div>
+          <div className="divider-text"><span>{t("auth.register.or")}</span></div>
           <form onSubmit={handleEmailRegister} className="stack-y-3">
             <div className="field">
-              <Label htmlFor="username">用户名</Label>
+              <Label htmlFor="username">{t("auth.register.username")}</Label>
               <Input
                 id="username"
                 required
@@ -83,11 +85,11 @@ export default function RegisterPage() {
                 maxLength={32}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="用于显示在帖子和回复中"
+                placeholder={t("auth.register.usernamePlaceholder")}
               />
             </div>
             <div className="field">
-              <Label htmlFor="email">邮箱</Label>
+              <Label htmlFor="email">{t("auth.register.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -97,7 +99,7 @@ export default function RegisterPage() {
               />
             </div>
             <div className="field">
-              <Label htmlFor="password">密码</Label>
+              <Label htmlFor="password">{t("auth.register.password")}</Label>
               <Input
                 id="password"
                 type="password"
@@ -109,13 +111,13 @@ export default function RegisterPage() {
             </div>
             {error && <p className="error-text">{error}</p>}
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "注册中..." : "注册"}
+              {loading ? t("auth.register.submitting") : t("auth.register.submit")}
             </Button>
           </form>
           <p className="text-sm muted text-center">
-            已有账号？{" "}
-            <Link href="/login" style={{ color: "hsl(var(--primary))" }}>
-              登录
+            {t("auth.register.hasAccount")}{" "}
+            <Link href="/login" style={{ color: "hsl(var(--accent))" }}>
+              {t("auth.register.login")}
             </Link>
           </p>
         </CardContent>

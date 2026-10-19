@@ -5,6 +5,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { LinkButton } from "@/components/ui/button";
 import { LogOut, User as UserIcon } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   user: { email: string } | null;
@@ -13,6 +14,7 @@ type Props = {
 
 export function UserMenu({ user, profile }: Props) {
   const router = useRouter();
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
 
@@ -27,8 +29,8 @@ export function UserMenu({ user, profile }: Props) {
   if (!user) {
     return (
       <div className="flex items-center gap-2">
-        <LinkButton href="/login" variant="ghost" size="sm">登录</LinkButton>
-        <LinkButton href="/register" size="sm">注册</LinkButton>
+        <LinkButton href="/login" variant="ghost" size="sm">{t("nav.login")}</LinkButton>
+        <LinkButton href="/register" size="sm">{t("nav.register")}</LinkButton>
       </div>
     );
   }
@@ -73,7 +75,7 @@ export function UserMenu({ user, profile }: Props) {
             style={{ justifyContent: "flex-start" }}
           >
             <LogOut size={14} />
-            {signingOut ? "退出中..." : "退出登录"}
+            {signingOut ? t("nav.signingOut") : t("nav.logout")}
           </button>
         </div>
       )}

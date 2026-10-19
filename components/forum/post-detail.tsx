@@ -9,6 +9,7 @@ import { Markdown } from "@/components/markdown";
 import { dayjs } from "@/lib/dayjs";
 import { Reply, Trash2 } from "lucide-react";
 import type { PostWithAuthor, ReplyWithAuthor } from "@/lib/types";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   post: PostWithAuthor;
@@ -43,6 +44,7 @@ function ReplyItem({
   isAdmin,
   likedIds,
   onDelete,
+  t,
 }: {
   reply: ReplyNode;
   depth: number;
@@ -51,6 +53,7 @@ function ReplyItem({
   isAdmin: boolean;
   likedIds: string[];
   onDelete: (id: string) => void;
+  t: (key: any) => string;
 }) {
   return (
     <div style={depth > 0 ? { paddingLeft: "1.5rem", borderLeft: "2px solid hsl(var(--border))" } : {}}>
@@ -87,7 +90,7 @@ function ReplyItem({
                 size="sm"
                 onClick={() => onReply(reply.id)}
               >
-                <Reply size={14} /> 回复
+                <Reply size={14} /> {t("forum.detail.reply")}
               </Button>
             )}
           </div>
@@ -103,6 +106,7 @@ function ReplyItem({
           isAdmin={isAdmin}
           likedIds={likedIds}
           onDelete={onDelete}
+          t={t}
         />
       ))}
     </div>
@@ -117,6 +121,7 @@ export function PostDetail({
   likedIds,
 }: Props) {
   const router = useRouter();
+  const { t } = useI18n();
   const [post, setPost] = useState(initialPost);
   const [replies, setReplies] = useState(initialReplies);
   const [replyTo, setReplyTo] = useState<string | null>(null);
@@ -192,12 +197,12 @@ export function PostDetail({
   }
 
   async function deleteReply(id: string) {
-    if (!confirm("确认删除这条回复？")) return;
+    if (!confirm(t("forum.detail.deleteReplyConfirm"))) return;
     await supabase.from("replies").delete().eq("id", id);
   }
 
   async function deletePost() {
-    if (!confirm("确认删除这个帖子？所有回复也会被删除。")) return;
+    if (!confirm(t("forum.detail.deletePostConfirm"))) return;
     await supabase.from("posts").delete().eq("id", post.id);
   }
 
@@ -230,21 +235,21 @@ export function PostDetail({
           />
           {(currentUserId === post.author_id || isAdmin) && (
             <Button variant="ghost" size="sm" onClick={deletePost}>
-              <Trash2 size={14} /> 删除帖子
+              <Trash2 size={14} /> {t("forum.detail.deletePost")}
             </Button>
           )}
         </div>
       </article>
 
       <section className="stack-y-3">
-        <h2 className="h2">回复 ({replies.length})</h2>
+        <h2 className="h2">{t("forum.detail.repliesCount").replace("{count}", String(replies.length))}</h2>
         {currentUserId ? (
           <div className="stack-y-2">
             {replyTo && (
               <div className="text-xs muted">
-                正在回复某条评论{" "}
+                {t("forum.detail.replyingTo")}{" "}
                 <button type="button" className="text-primary" style={{ color: "hsl(var(--primary))" }} onClick={() => setReplyTo(null)}>
-                  取消
+                  {t("forum.detail.cancelReply")}
                 </button>
               </div>
             )}
@@ -252,23 +257,23 @@ export function PostDetail({
               className="textarea"
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
-              placeholder="写下你的回复..."
+              placeholder={t("forum.detail.replyPlaceholder")}
               rows={4}
             />
             <div className="flex justify-end">
               <Button onClick={submitReply} disabled={submitting || !draft.trim()}>
-                {submitting ? "发送中..." : "发送回复"}
+                {submitting ? t("forum.detail.sendingReply") : t("forum.detail.sendReply")}
               </Button>
             </div>
           </div>
         ) : (
           <p className="text-sm muted">
-            <a href="/login" style={{ color: "hsl(var(--primary))" }}>登录</a>{" "}后即可回复
+            <a href="/login" style={{ color: "hsl(var(--primary))" }}>{t("nav.login")}</a>{" "}{t("forum.detail.loginToReply")}
           </p>
         )}
 
         {tree.length === 0 ? (
-          <p className="text-sm muted text-center py-6">还没有回复，来抢沙发。</p>
+          <p className="text-sm muted text-center py-6">{t("forum.detail.noReplies")}</p>
         ) : (
           <div className="stack-y-2">
             {tree.map((r) => (
@@ -281,6 +286,7 @@ export function PostDetail({
                 isAdmin={isAdmin}
                 likedIds={likedIds}
                 onDelete={deleteReply}
+                t={t}
               />
             ))}
           </div>

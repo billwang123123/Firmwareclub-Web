@@ -3,11 +3,13 @@ import { LinkButton } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { dayjs } from "@/lib/dayjs";
 import { Plus } from "lucide-react";
+import { getT } from "@/lib/i18n-server";
 
-export const metadata = { title: "日志 · Firmware 嵌入式开发社" };
+export const metadata = { title: "日志 · Firmware" };
 
 export default async function BlogListPage() {
   const supabase = await createClient();
+  const t = await getT();
   const { data: posts } = await supabase
     .from("blog_posts")
     .select("id, slug, title, excerpt, cover_url, published_at, author:profiles(username)")
@@ -29,10 +31,10 @@ export default async function BlogListPage() {
   return (
     <div className="stack-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="h1">社团日志</h1>
+        <h1 className="h1">{t("blog.title")}</h1>
         {isAdmin && (
           <LinkButton href="/blog/manage/new">
-            <Plus size={16} /> 写新日志
+            <Plus size={16} /> {t("blog.writeNew")}
           </LinkButton>
         )}
       </div>
@@ -49,10 +51,10 @@ export default async function BlogListPage() {
                   </div>
                 )}
                 <div className="card-header">
-                  <h3 className="card-title" style={{ fontSize: "1rem" }}>{p.title}</h3>
+                  <h3 className="card-title">{p.title}</h3>
                   <p className="card-desc line-clamp-3">{p.excerpt}</p>
                 </div>
-                <div className="card-content" style={{ paddingTop: 0, paddingBottom: "1.5rem" }}>
+                <div className="card-content" style={{ paddingTop: 0, paddingBottom: "1.25rem" }}>
                   <span className="text-xs muted">
                     {dayjs(p.published_at).format("YYYY-MM-DD")} · {author?.username ?? ""}
                   </span>
@@ -62,7 +64,7 @@ export default async function BlogListPage() {
           })}
         </div>
       ) : (
-        <p className="text-sm muted">还没有日志。</p>
+        <div className="empty-state">{t("blog.empty")}</div>
       )}
     </div>
   );

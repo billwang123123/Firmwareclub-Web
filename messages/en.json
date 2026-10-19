@@ -1,0 +1,148 @@
+{
+  "common": {
+    "siteName": "Firmware",
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "submit": "Submit",
+    "back": "Back",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "nav": {
+    "forum": "Forum",
+    "blog": "Blog",
+    "members": "Members",
+    "admin": "Admin",
+    "login": "Log in",
+    "register": "Sign up",
+    "logout": "Log out",
+    "signingOut": "Signing out…"
+  },
+  "home": {
+    "eyebrow": "Firmware Embedded Dev Club",
+    "title": "Hardware first,\ncode follows",
+    "desc": "STM32, Arduino, ESP32, embedded Linux, RTOS — solder, debug, write firmware, and build things that actually run.",
+    "openForum": "Open forum",
+    "browseBlog": "Browse blog",
+    "meetMembers": "Meet members"
+  },
+  "forum": {
+    "title": "Tech Forum",
+    "newPost": "New post",
+    "newPostTitle": "Write a new post",
+    "allTags": "All",
+    "empty": "No posts yet. Be the first to write one.",
+    "emptyLoading": "Loading…",
+    "form": {
+      "title": "Title",
+      "titlePlaceholder": "Briefly describe your question or topic",
+      "tag": "Tag",
+      "cover": "Cover image (optional)",
+      "body": "Body (Markdown + code blocks supported)",
+      "bodyPlaceholder": "Describe your problem in detail. Paste code and error messages…",
+      "publish": "Publish",
+      "publishing": "Publishing…",
+      "titleBodyRequired": "Title and body are required"
+    },
+    "detail": {
+      "deletePost": "Delete post",
+      "deletePostConfirm": "Delete this post? All replies will be removed.",
+      "deleteReply": "Delete reply",
+      "deleteReplyConfirm": "Delete this reply?",
+      "repliesCount": "Replies ({count})",
+      "loginToReply": "to reply",
+      "reply": "Reply",
+      "sendReply": "Send reply",
+      "sendingReply": "Sending…",
+      "replyPlaceholder": "Write your reply…",
+      "noReplies": "No replies yet. Be the first.",
+      "replyingTo": "Replying to a comment",
+      "cancelReply": "Cancel"
+    }
+  },
+  "blog": {
+    "title": "Club Blog",
+    "writeNew": "Write a new post",
+    "empty": "No posts yet.",
+    "viewAll": "View all"
+  },
+  "members": {
+    "title": "Club Members",
+    "manage": "Manage members",
+    "empty": "No members yet."
+  },
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "desc": "Sign in with email or GitHub",
+      "github": "Continue with GitHub",
+      "githubLoading": "Redirecting…",
+      "or": "or",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "submit": "Log in",
+      "submitting": "Signing in…",
+      "noAccount": "No account?",
+      "register": "Sign up"
+    },
+    "register": {
+      "title": "Sign up",
+      "desc": "Create an account to join the club",
+      "github": "Continue with GitHub",
+      "githubLoading": "Redirecting…",
+      "or": "or",
+      "username": "Username",
+      "usernamePlaceholder": "Shown on posts and replies",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign up",
+      "submitting": "Signing up…",
+      "hasAccount": "Already have an account?",
+      "login": "Log in"
+    }
+  },
+  "admin": {
+    "title": "Admin",
+    "blogCard": {
+      "title": "Blog",
+      "desc": "Create, edit and delete blog posts"
+    },
+    "membersCard": {
+      "title": "Members",
+      "desc": "Maintain the members page"
+    }
+  },
+  "tags": {
+    "STM32": "STM32",
+    "Arduino": "Arduino",
+    "ESP32": "ESP32",
+    "嵌入式Linux": "Embedded Linux",
+    "RTOS": "RTOS",
+    "工具链": "Toolchain",
+    "杂谈": "Off-topic"
+  },
+  "tagsPill": {
+    "all": "All",
+    "STM32": "STM32",
+    "Arduino": "Arduino",
+    "ESP32": "ESP32",
+    "嵌入式Linux": "Embedded Linux",
+    "RTOS": "RTOS",
+    "工具链": "Toolchain",
+    "杂谈": "Off-topic"
+  },
+  "footer": {
+    "tagline": "Embedded dev club"
+  },
+  "notFound": {
+    "title": "404",
+    "desc": "Page not found",
+    "back": "Back to home"
+  }
+}

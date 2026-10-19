@@ -3,9 +3,11 @@ import { LinkButton } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { dayjs } from "@/lib/dayjs";
 import { Cpu, Zap, BookOpen, Users, ArrowRight, MessageCircle } from "lucide-react";
+import { getT } from "@/lib/i18n-server";
 
 export default async function HomePage() {
   const supabase = await createClient();
+  const t = await getT();
   const [{ data: posts }, { data: blogs }] = await Promise.all([
     supabase
       .from("posts")
@@ -22,36 +24,41 @@ export default async function HomePage() {
   return (
     <div className="stack-y-10">
       <section className="hero">
-        <div className="hero-eyebrow">Firmware 嵌入式开发社</div>
-        <h1 className="hero-title">玩硬件，<br />也写代码</h1>
-        <p className="hero-desc">
-          STM32、Arduino、ESP32、嵌入式 Linux、RTOS —— 焊板子、调电路、写固件，一起造点真正能跑的东西。
-        </p>
+        <div className="hero-eyebrow">{t("home.eyebrow")}</div>
+        <h1 className="hero-title">
+          {t("home.title").split("\n").map((line, i, arr) => (
+            <span key={i}>
+              {line}
+              {i < arr.length - 1 && <br />}
+            </span>
+          ))}
+        </h1>
+        <p className="hero-desc">{t("home.desc")}</p>
         <div className="hero-pills">
           <span className="hero-pill"><Cpu size={12} /> STM32</span>
           <span className="hero-pill"><Zap size={12} /> Arduino</span>
           <span className="hero-pill">📡 ESP32</span>
-          <span className="hero-pill">🐧 嵌入式 Linux</span>
+          <span className="hero-pill">🐧 {t("tags.嵌入式Linux")}</span>
           <span className="hero-pill">⏱ RTOS</span>
         </div>
         <div className="hero-actions">
           <LinkButton href="/forum">
-            <MessageCircle size={16} /> 打开论坛
+            <MessageCircle size={16} /> {t("home.openForum")}
           </LinkButton>
           <LinkButton href="/blog" variant="outline">
-            <BookOpen size={16} /> 浏览日志
+            <BookOpen size={16} /> {t("home.browseBlog")}
           </LinkButton>
           <LinkButton href="/members" variant="ghost">
-            <Users size={16} /> 认识成员
+            <Users size={16} /> {t("home.meetMembers")}
           </LinkButton>
         </div>
       </section>
 
       <section className="stack-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="h2">日志</h2>
+          <h2 className="h2">{t("blog.title")}</h2>
           <Link href="/blog" className="text-sm muted flex items-center gap-1" style={{ textDecoration: "none" }}>
-            查看全部 <ArrowRight size={12} />
+            {t("blog.viewAll")} <ArrowRight size={12} />
           </Link>
         </div>
         {blogs?.length ? (
@@ -75,15 +82,15 @@ export default async function HomePage() {
             ))}
           </div>
         ) : (
-          <div className="empty-state">还没有日志文章。</div>
+          <div className="empty-state">{t("blog.empty")}</div>
         )}
       </section>
 
       <section className="stack-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="h2">最新帖子</h2>
+          <h2 className="h2">{t("forum.title")}</h2>
           <Link href="/forum" className="text-sm muted flex items-center gap-1" style={{ textDecoration: "none" }}>
-            查看全部 <ArrowRight size={12} />
+            {t("blog.viewAll")} <ArrowRight size={12} />
           </Link>
         </div>
         {posts?.length ? (
@@ -94,7 +101,7 @@ export default async function HomePage() {
                 <Link key={p.id} href={`/forum/${p.id}`} className="post-item">
                   <div className="post-item-main">
                     <div className="post-item-title">
-                      <span className="badge badge-secondary">{p.tag}</span>
+                      <span className="badge badge-secondary">{t(`tags.${p.tag}` as any)}</span>
                       <span className="post-item-title-text">{p.title}</span>
                     </div>
                     <div className="post-item-meta">
@@ -110,7 +117,7 @@ export default async function HomePage() {
             })}
           </div>
         ) : (
-          <div className="empty-state">还没有帖子，来发第一个吧。</div>
+          <div className="empty-state">{t("forum.empty")}</div>
         )}
       </section>
     </div>

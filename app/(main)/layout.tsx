@@ -1,6 +1,8 @@
 import { Navbar } from "@/components/navbar";
+import { getT } from "@/lib/i18n-server";
 
-export default function MainLayout({ children }: LayoutProps<"/">) {
+export default async function MainLayout({ children }: LayoutProps<"/">) {
+  const t = await getT();
   return (
     <>
       <Navbar />
@@ -9,7 +11,7 @@ export default function MainLayout({ children }: LayoutProps<"/">) {
       </main>
       <footer className="footer">
         <div className="container-app">
-          Firmware 嵌入式开发社 · Powered by Next.js + Supabase
+          {t("common.siteName")} · {t("footer.tagline")} · Powered by Next.js + Supabase
         </div>
       </footer>
     </>

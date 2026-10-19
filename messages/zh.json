@@ -1,0 +1,148 @@
+{
+  "common": {
+    "siteName": "Firmware",
+    "loading": "加载中…",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "submit": "提交",
+    "back": "返回",
+    "confirm": "确认",
+    "yes": "是",
+    "no": "否"
+  },
+  "nav": {
+    "forum": "论坛",
+    "blog": "日志",
+    "members": "成员",
+    "admin": "管理",
+    "login": "登录",
+    "register": "注册",
+    "logout": "退出登录",
+    "signingOut": "退出中…"
+  },
+  "home": {
+    "eyebrow": "Firmware 嵌入式开发社",
+    "title": "玩硬件，\n也写代码",
+    "desc": "STM32、Arduino、ESP32、嵌入式 Linux、RTOS —— 焊板子、调电路、写固件，一起造点真正能跑的东西。",
+    "openForum": "打开论坛",
+    "browseBlog": "浏览日志",
+    "meetMembers": "认识成员"
+  },
+  "forum": {
+    "title": "技术论坛",
+    "newPost": "发帖",
+    "newPostTitle": "发表新帖",
+    "allTags": "全部",
+    "empty": "还没有帖子，来发第一个吧。",
+    "emptyLoading": "加载中…",
+    "form": {
+      "title": "标题",
+      "titlePlaceholder": "简洁描述你的问题或主题",
+      "tag": "标签",
+      "cover": "封面图（可选）",
+      "body": "正文（支持 Markdown + 代码块）",
+      "bodyPlaceholder": "详细描述你的问题，记得贴上代码和报错信息…",
+      "publish": "发布",
+      "publishing": "发布中…",
+      "titleBodyRequired": "标题和正文不能为空"
+    },
+    "detail": {
+      "deletePost": "删除帖子",
+      "deletePostConfirm": "确认删除这个帖子？所有回复也会被删除。",
+      "deleteReply": "删除回复",
+      "deleteReplyConfirm": "确认删除这条回复？",
+      "repliesCount": "回复 ({count})",
+      "loginToReply": "后即可回复",
+      "reply": "回复",
+      "sendReply": "发送回复",
+      "sendingReply": "发送中…",
+      "replyPlaceholder": "写下你的回复…",
+      "noReplies": "还没有回复，来抢沙发。",
+      "replyingTo": "正在回复某条评论",
+      "cancelReply": "取消"
+    }
+  },
+  "blog": {
+    "title": "社团日志",
+    "writeNew": "写新日志",
+    "empty": "还没有日志。",
+    "viewAll": "查看全部"
+  },
+  "members": {
+    "title": "社团成员",
+    "manage": "管理成员",
+    "empty": "还没有成员。"
+  },
+  "auth": {
+    "login": {
+      "title": "登录",
+      "desc": "使用邮箱或 GitHub 账号登录",
+      "github": "使用 GitHub 登录",
+      "githubLoading": "跳转中…",
+      "or": "或",
+      "email": "邮箱",
+      "emailPlaceholder": "you@example.com",
+      "password": "密码",
+      "submit": "登录",
+      "submitting": "登录中…",
+      "noAccount": "还没有账号？",
+      "register": "注册"
+    },
+    "register": {
+      "title": "注册",
+      "desc": "创建账号加入社团",
+      "github": "使用 GitHub 注册",
+      "githubLoading": "跳转中…",
+      "or": "或",
+      "username": "用户名",
+      "usernamePlaceholder": "用于显示在帖子和回复中",
+      "email": "邮箱",
+      "password": "密码",
+      "submit": "注册",
+      "submitting": "注册中…",
+      "hasAccount": "已有账号？",
+      "login": "登录"
+    }
+  },
+  "admin": {
+    "title": "管理后台",
+    "blogCard": {
+      "title": "日志管理",
+      "desc": "创建、编辑、删除社团日志文章"
+    },
+    "membersCard": {
+      "title": "成员管理",
+      "desc": "维护社团成员介绍页的内容"
+    }
+  },
+  "tags": {
+    "STM32": "STM32",
+    "Arduino": "Arduino",
+    "ESP32": "ESP32",
+    "嵌入式Linux": "嵌入式 Linux",
+    "RTOS": "RTOS",
+    "工具链": "工具链",
+    "杂谈": "杂谈"
+  },
+  "tagsPill": {
+    "all": "全部",
+    "STM32": "STM32",
+    "Arduino": "Arduino",
+    "ESP32": "ESP32",
+    "嵌入式Linux": "嵌入式 Linux",
+    "RTOS": "RTOS",
+    "工具链": "工具链",
+    "杂谈": "杂谈"
+  },
+  "footer": {
+    "tagline": "嵌入式开发社团"
+  },
+  "notFound": {
+    "title": "404",
+    "desc": "页面不存在",
+    "back": "返回首页"
+  }
+}

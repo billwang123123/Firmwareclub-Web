@@ -10,9 +10,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MdEditor } from "@/components/md-editor";
 import { FORUM_TAGS, type ForumTag } from "@/lib/tags";
 import { uploadFile } from "@/lib/storage";
+import { useI18n } from "@/lib/i18n";
 
 export default function NewPostPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tag, setTag] = useState<ForumTag>("杂谈");
@@ -24,7 +26,7 @@ export default function NewPostPage() {
     e.preventDefault();
     setError(null);
     if (!title.trim() || !body.trim()) {
-      setError("标题和正文不能为空");
+      setError(t("forum.form.titleBodyRequired"));
       return;
     }
     setSubmitting(true);
@@ -61,42 +63,42 @@ export default function NewPostPage() {
 
   return (
     <div className="mx-auto max-w-3xl stack-y-4">
-      <h1 className="h1">发表新帖</h1>
+      <h1 className="h1">{t("forum.newPostTitle")}</h1>
       <form onSubmit={handleSubmit} className="stack-y-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">基本信息</CardTitle>
+            <CardTitle className="text-base">Basic info</CardTitle>
           </CardHeader>
           <CardContent className="stack-y-4">
             <div className="field">
-              <Label htmlFor="title">标题</Label>
+              <Label htmlFor="title">{t("forum.form.title")}</Label>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={120}
-                placeholder="简洁描述你的问题或主题"
+                placeholder={t("forum.form.titlePlaceholder")}
                 required
               />
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
               <div className="field">
-                <Label htmlFor="tag">标签</Label>
+                <Label htmlFor="tag">{t("forum.form.tag")}</Label>
                 <select
                   id="tag"
                   className="select"
                   value={tag}
                   onChange={(e) => setTag(e.target.value as ForumTag)}
                 >
-                  {FORUM_TAGS.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
+                  {FORUM_TAGS.map((tg) => (
+                    <option key={tg} value={tg}>
+                      {t(`tagsPill.${tg}` as any)}
                     </option>
                   ))}
                 </select>
               </div>
               <div className="field">
-                <Label htmlFor="cover">封面图（可选）</Label>
+                <Label htmlFor="cover">{t("forum.form.cover")}</Label>
                 <input
                   id="cover"
                   className="input"
@@ -110,24 +112,24 @@ export default function NewPostPage() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">正文（支持 Markdown + 代码块）</CardTitle>
+            <CardTitle className="text-base">{t("forum.form.body")}</CardTitle>
           </CardHeader>
           <CardContent>
             <MdEditor
               value={body}
               onChange={setBody}
               height={400}
-              placeholder="详细描述你的问题，记得贴上代码和报错信息..."
+              placeholder={t("forum.form.bodyPlaceholder")}
             />
           </CardContent>
         </Card>
         {error && <p className="error-text">{error}</p>}
         <div className="flex justify-end gap-2">
           <Button type="button" variant="ghost" onClick={() => router.back()}>
-            取消
+            {t("common.cancel")}
           </Button>
           <Button type="submit" disabled={submitting}>
-            {submitting ? "发布中..." : "发布"}
+            {submitting ? t("forum.form.publishing") : t("forum.form.publish")}
           </Button>
         </div>
       </form>

@@ -1,11 +1,13 @@
-import { Link as LinkIcon, Pencil } from "lucide-react";
+import { getT } from "@/lib/i18n-server";
+import { LinkIcon, Pencil } from "lucide-react";
 import { LinkButton } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata = { title: "成员 · Firmware 嵌入式开发社" };
+export const metadata = { title: "成员 · Firmware" };
 
 export default async function MembersPage() {
   const supabase = await createClient();
+  const t = await getT();
   const { data: members } = await supabase
     .from("members")
     .select("*")
@@ -28,15 +30,15 @@ export default async function MembersPage() {
   return (
     <div className="stack-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="h1">社团成员</h1>
+        <h1 className="h1">{t("members.title")}</h1>
         {isAdmin && (
           <LinkButton href="/members/manage">
-            <Pencil size={16} /> 管理成员
+            <Pencil size={16} /> {t("members.manage")}
           </LinkButton>
         )}
       </div>
       {!members?.length ? (
-        <p className="text-sm muted">还没有成员。</p>
+        <div className="empty-state">{t("members.empty")}</div>
       ) : (
         <div className="card-grid cols-3">
           {members.map((m) => (
@@ -70,8 +72,8 @@ export default async function MembersPage() {
                 {m.bio && <p className="text-sm muted">{m.bio}</p>}
                 {m.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1">
-                    {m.tags.map((t) => (
-                      <span key={t} className="badge badge-secondary">{t}</span>
+                    {m.tags.map((tag) => (
+                      <span key={tag} className="badge badge-secondary">{tag}</span>
                     ))}
                   </div>
                 )}

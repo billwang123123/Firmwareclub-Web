@@ -8,10 +8,12 @@ import { FORUM_TAGS, type ForumTag } from "@/lib/tags";
 import type { PostWithAuthor } from "@/lib/types";
 import { dayjs } from "@/lib/dayjs";
 import { Plus } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 export function ForumList() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t, locale } = useI18n();
   const activeTag = searchParams.get("tag") as ForumTag | null;
   const [posts, setPosts] = useState<PostWithAuthor[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,7 @@ export function ForumList() {
       setLoading(false);
     }
     load();
-  }, [activeTag]);
+  }, [activeTag, locale]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -74,9 +76,9 @@ export function ForumList() {
   return (
     <div className="stack-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="h1">技术论坛</h1>
+        <h1 className="h1">{t("forum.title")}</h1>
         <Button onClick={() => router.push("/forum/new")}>
-          <Plus size={16} /> 发帖
+          <Plus size={16} /> {t("forum.newPost")}
         </Button>
       </div>
       <div className="tag-pills">
@@ -84,24 +86,22 @@ export function ForumList() {
           href="/forum"
           className={`tag-pill ${!activeTag ? "active" : ""}`}
         >
-          全部
+          {t("forum.allTags")}
         </a>
-        {FORUM_TAGS.map((t) => (
+        {FORUM_TAGS.map((tag) => (
           <a
-            key={t}
-            href={`/forum?tag=${encodeURIComponent(t)}`}
-            className={`tag-pill ${activeTag === t ? "active" : ""}`}
+            key={tag}
+            href={`/forum?tag=${encodeURIComponent(tag)}`}
+            className={`tag-pill ${activeTag === tag ? "active" : ""}`}
           >
-            {t}
+            {t(`tagsPill.${tag}` as any)}
           </a>
         ))}
       </div>
       {loading ? (
-        <p className="text-sm muted">加载中...</p>
+        <p className="text-sm muted">{t("forum.emptyLoading")}</p>
       ) : posts.length === 0 ? (
-        <div className="empty-state">
-          还没有帖子，来发第一个吧。
-        </div>
+        <div className="empty-state">{t("forum.empty")}</div>
       ) : (
         <div className="stack-y-2">
           {posts.map((p) => (
@@ -112,7 +112,7 @@ export function ForumList() {
             >
               <div className="post-item-main">
                 <div className="post-item-title">
-                  <span className="badge badge-secondary">{p.tag}</span>
+                  <span className="badge badge-secondary">{t(`tags.${p.tag}` as any)}</span>
                   <span className="post-item-title-text">{p.title}</span>
                 </div>
                 <div className="post-item-meta">

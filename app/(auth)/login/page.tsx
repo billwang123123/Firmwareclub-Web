@@ -9,10 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { GithubIcon } from "@/components/icons/github";
+import { useI18n } from "@/lib/i18n";
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useI18n();
   const next = searchParams.get("next") ?? "/";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,10 +51,10 @@ function LoginForm() {
   }
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-sm auth-card">
       <CardHeader>
-        <CardTitle>登录</CardTitle>
-        <CardDescription>使用邮箱或 GitHub 账号登录</CardDescription>
+        <CardTitle>{t("auth.login.title")}</CardTitle>
+        <CardDescription>{t("auth.login.desc")}</CardDescription>
       </CardHeader>
       <CardContent className="stack-y-4">
         <Button
@@ -63,23 +65,23 @@ function LoginForm() {
           disabled={githubLoading}
         >
           <GithubIcon className="h-4 w-4" />
-          {githubLoading ? "跳转中..." : "使用 GitHub 登录"}
+          {githubLoading ? t("auth.login.githubLoading") : t("auth.login.github")}
         </Button>
-        <div className="divider-text"><span>或</span></div>
+        <div className="divider-text"><span>{t("auth.login.or")}</span></div>
         <form onSubmit={handleEmailLogin} className="stack-y-3">
           <div className="field">
-            <Label htmlFor="email">邮箱</Label>
+            <Label htmlFor="email">{t("auth.login.email")}</Label>
             <Input
               id="email"
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
+              placeholder={t("auth.login.emailPlaceholder")}
             />
           </div>
           <div className="field">
-            <Label htmlFor="password">密码</Label>
+            <Label htmlFor="password">{t("auth.login.password")}</Label>
             <Input
               id="password"
               type="password"
@@ -90,13 +92,13 @@ function LoginForm() {
           </div>
           {error && <p className="error-text">{error}</p>}
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "登录中..." : "登录"}
+            {loading ? t("auth.login.submitting") : t("auth.login.submit")}
           </Button>
         </form>
         <p className="text-sm muted text-center">
-          还没有账号？{" "}
-          <Link href="/register" style={{ color: "hsl(var(--primary))" }}>
-            注册
+          {t("auth.login.noAccount")}{" "}
+          <Link href="/register" style={{ color: "hsl(var(--accent))" }}>
+            {t("auth.login.register")}
           </Link>
         </p>
       </CardContent>
@@ -109,9 +111,9 @@ export default function LoginPage() {
     <div className="auth-wrap">
       <Suspense
         fallback={
-    <Card className="w-full max-w-sm auth-card">
+          <Card className="w-full max-w-sm">
             <CardContent className="p-6 text-sm muted">
-              加载中...
+              Loading…
             </CardContent>
           </Card>
         }
