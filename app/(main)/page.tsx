@@ -2,7 +2,7 @@ import Link from "next/link";
 import { LinkButton } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { dayjs } from "@/lib/dayjs";
-import { MessageSquare, BookOpen, Users } from "lucide-react";
+import { Cpu, Zap, BookOpen, Users, ArrowRight, MessageCircle } from "lucide-react";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -14,62 +14,49 @@ export default async function HomePage() {
       .limit(8),
     supabase
       .from("blog_posts")
-      .select("id, slug, title, excerpt, cover_url, published_at")
+      .select("id, slug, title, excerpt, cover_url, published_at, author:profiles(username)")
       .order("published_at", { ascending: false })
-      .limit(3),
+      .limit(6),
   ]);
 
   return (
     <div className="stack-y-10">
       <section className="hero">
-        <div className="hero-bg" />
-        <div className="hero-grid" />
-        <div className="hero-overlay" />
-        <div className="hero-content stack-y-2">
-          <div className="hero-tag">STM32 · Arduino · ESP32 · RTOS</div>
-          <h1 className="hero-title">Firmware 嵌入式开发社</h1>
-          <p className="hero-desc">
-            在这里交流 STM32、Arduino、ESP32、RTOS、嵌入式 Linux 等技术话题，
-            分享项目经验、解决调试难题。加入我们，一起把代码烧进板子里。
-          </p>
-          <div className="flex gap-3" style={{ paddingTop: "1.25rem", flexWrap: "wrap" }}>
-            <LinkButton href="/forum">
-              <MessageSquare size={16} /> 进入论坛
-            </LinkButton>
-            <LinkButton href="/blog" variant="outline">
-              <BookOpen size={16} /> 阅读日志
-            </LinkButton>
-            <LinkButton href="/members" variant="ghost">
-              <Users size={16} /> 认识成员
-            </LinkButton>
-          </div>
-          <div className="hero-stats">
-            <div>
-              <div className="hero-stat-num">{blogs?.length ?? 0}</div>
-              <div className="hero-stat-label">日志文章</div>
-            </div>
-            <div>
-              <div className="hero-stat-num">{posts?.length ?? 0}</div>
-              <div className="hero-stat-label">技术话题</div>
-            </div>
-            <div>
-              <div className="hero-stat-num">∞</div>
-              <div className="hero-stat-label">代码行数</div>
-            </div>
-          </div>
+        <div className="hero-eyebrow">Firmware 嵌入式开发社</div>
+        <h1 className="hero-title">玩硬件，<br />也写代码</h1>
+        <p className="hero-desc">
+          STM32、Arduino、ESP32、嵌入式 Linux、RTOS —— 焊板子、调电路、写固件，一起造点真正能跑的东西。
+        </p>
+        <div className="hero-pills">
+          <span className="hero-pill"><Cpu size={12} /> STM32</span>
+          <span className="hero-pill"><Zap size={12} /> Arduino</span>
+          <span className="hero-pill">📡 ESP32</span>
+          <span className="hero-pill">🐧 嵌入式 Linux</span>
+          <span className="hero-pill">⏱ RTOS</span>
+        </div>
+        <div className="hero-actions">
+          <LinkButton href="/forum">
+            <MessageCircle size={16} /> 打开论坛
+          </LinkButton>
+          <LinkButton href="/blog" variant="outline">
+            <BookOpen size={16} /> 浏览日志
+          </LinkButton>
+          <LinkButton href="/members" variant="ghost">
+            <Users size={16} /> 认识成员
+          </LinkButton>
         </div>
       </section>
 
       <section className="stack-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="h2">最新日志</h2>
-          <Link href="/blog" className="text-sm muted" style={{ textDecoration: "none" }}>
-            查看全部 →
+          <h2 className="h2">日志</h2>
+          <Link href="/blog" className="text-sm muted flex items-center gap-1" style={{ textDecoration: "none" }}>
+            查看全部 <ArrowRight size={12} />
           </Link>
         </div>
-        <div className="card-grid cols-3">
-          {blogs?.length ? (
-            blogs.map((b) => (
+        {blogs?.length ? (
+          <div className="card-grid cols-3">
+            {blogs.map((b) => (
               <Link key={b.id} href={`/blog/${b.slug}`} className="card card-hover" style={{ overflow: "hidden", textDecoration: "none", color: "inherit" }}>
                 {b.cover_url && (
                   <div className="cover">
@@ -78,30 +65,30 @@ export default async function HomePage() {
                   </div>
                 )}
                 <div className="card-header">
-                  <h3 className="card-title" style={{ fontSize: "1rem" }}>{b.title}</h3>
+                  <h3 className="card-title">{b.title}</h3>
                   <p className="card-desc line-clamp-2">{b.excerpt}</p>
                 </div>
-                <div className="card-content" style={{ paddingTop: 0, paddingBottom: "1.5rem" }}>
+                <div className="card-content" style={{ paddingTop: 0, paddingBottom: "1.25rem" }}>
                   <span className="text-xs muted">{dayjs(b.published_at).format("YYYY-MM-DD")}</span>
                 </div>
               </Link>
-            ))
-          ) : (
-            <p className="text-sm muted" style={{ gridColumn: "1 / -1" }}>暂无日志文章。</p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">还没有日志文章。</div>
+        )}
       </section>
 
       <section className="stack-y-4">
         <div className="flex items-center justify-between">
           <h2 className="h2">最新帖子</h2>
-          <Link href="/forum" className="text-sm muted" style={{ textDecoration: "none" }}>
-            查看全部 →
+          <Link href="/forum" className="text-sm muted flex items-center gap-1" style={{ textDecoration: "none" }}>
+            查看全部 <ArrowRight size={12} />
           </Link>
         </div>
-        <div className="stack-y-2">
-          {posts?.length ? (
-            posts.map((p) => {
+        {posts?.length ? (
+          <div className="stack-y-2">
+            {posts.map((p) => {
               const author = Array.isArray(p.author) ? p.author[0] : p.author;
               return (
                 <Link key={p.id} href={`/forum/${p.id}`} className="post-item">
@@ -120,11 +107,11 @@ export default async function HomePage() {
                   </div>
                 </Link>
               );
-            })
-          ) : (
-            <p className="text-sm muted">暂无帖子，来发第一个吧。</p>
-          )}
-        </div>
+            })}
+          </div>
+        ) : (
+          <div className="empty-state">还没有帖子，来发第一个吧。</div>
+        )}
       </section>
     </div>
   );
