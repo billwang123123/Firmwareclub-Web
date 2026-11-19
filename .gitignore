@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 独立子项目：农业传感器监控平台（独立仓库，勿被父仓跟踪）
+/agri-sensor-platform/
+
+# 本地临时笔记
+/.hints/
+
+# Kilo 本地配置
+/.kilo/

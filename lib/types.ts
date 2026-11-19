@@ -85,6 +85,7 @@ export type Database = {
           bio: string | null;
           github_url: string | null;
           sort_order: number;
+          created_by: string | null;
           created_at: string;
         };
         Insert: {
@@ -97,6 +98,7 @@ export type Database = {
           bio?: string | null;
           github_url?: string | null;
           sort_order?: number;
+          created_by?: string | null;
           created_at?: string;
         };
         Update: {
@@ -108,8 +110,16 @@ export type Database = {
           bio?: string | null;
           github_url?: string | null;
           sort_order?: number;
+          created_by?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "members_created_by_fkey";
+            columns: ["created_by"];
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       posts: {
         Row: {
